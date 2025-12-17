@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Navigation() {
+  const navigate = useNavigate();
+
   return (
     <nav className="bg-gray-800 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,15 +20,24 @@ export default function Navigation() {
             <a href="/cars" className="hover:text-gray-300 transition-colors">
               Cars
             </a>
-            <a href="/contact" className="hover:text-gray-300 transition-colors">
+            <a
+              href="/contact"
+              className="hover:text-gray-300 transition-colors"
+            >
               Contact
             </a>
           </div>
           <div className="hidden md:flex space-x-4">
-            <button className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition">
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition"
+            >
               Login
             </button>
-            <button className="bg-white text-gray-800 px-3 py-1 rounded hover:bg-gray-200 transition">
+            <button
+              onClick={() => navigate("/register")}
+              className="bg-white text-gray-800 px-3 py-1 rounded hover:bg-gray-200 transition"
+            >
               Sign Up
             </button>
           </div>
@@ -37,7 +50,12 @@ export default function Navigation() {
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>
