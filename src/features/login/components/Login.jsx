@@ -1,4 +1,45 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../../features/login/store/authSlice";
+
 export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const { loading, error } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const result = await dispatch(
+        login({
+          email: formData.email,
+          password: formData.password,
+        })
+      ).unwrap();
+
+      console.log("Login successful:", result);
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
@@ -11,6 +52,9 @@ export default function Login() {
             <label className="block text-gray-700 mb-1">Email</label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="you@example.com"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
             />
@@ -20,6 +64,9 @@ export default function Login() {
             <label className="block text-gray-700 mb-1">Password</label>
             <input
               type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="••••••••"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
             />
@@ -37,20 +84,28 @@ export default function Login() {
 
           <button
             type="submit"
+            disabled={loading}
+            onClick={handleSubmit}
             className="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-gray-700 transition"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
+        {error && (
+          <p className="text-red-500 text-center mt-4">
+            {error.message || "Login failed. Please try again."}
+          </p>
+        )}
+
         <p className="text-center text-gray-600 mt-6">
           Don’t have an account?{" "}
-          <a
-            href="/register"
-            className="text-gray-800 font-semibold hover:underline"
+          <span
+            onClick={() => navigate("/register")}
+            className="text-gray-800 font-semibold hover:underline cursor-pointer"
           >
             Register
-          </a>
+          </span>
         </p>
       </div>
     </div>

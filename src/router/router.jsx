@@ -5,6 +5,7 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Login from "../features/login/components/Login";
 import Register from "../features/login/components/Register";
+import NotFound from "../shared/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
