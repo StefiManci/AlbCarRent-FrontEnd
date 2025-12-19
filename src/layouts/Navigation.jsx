@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../features/login/store/authSlice";
 
 export default function Navigation() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const token = useSelector((state) => state.auth.token);
   const isAuthenticated = !!token;
 
@@ -13,6 +13,11 @@ export default function Navigation() {
     dispatch(logout());
     navigate("/");
   };
+
+  const linkClasses = ({ isActive }) =>
+    isActive
+      ? "text-yellow-400 font-semibold"
+      : "hover:text-gray-300 transition-colors";
 
   return (
     <nav className="bg-gray-800 text-white shadow-md">
@@ -24,38 +29,25 @@ export default function Navigation() {
           >
             <h1 className="text-2xl font-bold text-white">AlbCarRent</h1>
           </div>
+
           <div className="hidden md:flex space-x-6">
-            <button
-              onClick={() => navigate("/")}
-              className="hover:text-gray-300 transition-colors"
-            >
+            <NavLink to="/" className={linkClasses}>
               Home
-            </button>
-            <button
-              onClick={() => navigate("/about")}
-              className="hover:text-gray-300 transition-colors"
-            >
+            </NavLink>
+            <NavLink to="/about" className={linkClasses}>
               About
-            </button>
-            <button
-              onClick={() => navigate("/cars")}
-              className="hover:text-gray-300 transition-colors"
-            >
+            </NavLink>
+            <NavLink to="/cars" className={linkClasses}>
               Cars
-            </button>
-            <button
-              onClick={() => navigate("/blog")}
-              className="hover:text-gray-300 transition-colors"
-            >
+            </NavLink>
+            <NavLink to="/blog" className={linkClasses}>
               Blog
-            </button>
-            <button
-              onClick={() => navigate("/contact")}
-              className="hover:text-gray-300 transition-colors"
-            >
+            </NavLink>
+            <NavLink to="/contact" className={linkClasses}>
               Contact
-            </button>
+            </NavLink>
           </div>
+
           <div className="hidden md:flex space-x-4">
             {!isAuthenticated ? (
               <>
@@ -105,6 +97,7 @@ export default function Navigation() {
               </>
             )}
           </div>
+
           <div className="md:hidden">
             <button className="text-white">
               <svg
