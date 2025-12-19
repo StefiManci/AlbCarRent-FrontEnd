@@ -44,6 +44,12 @@ export default function Navigation() {
               Cars
             </button>
             <button
+              onClick={() => navigate("/blog")}
+              className="hover:text-gray-300 transition-colors"
+            >
+              Blog
+            </button>
+            <button
               onClick={() => navigate("/contact")}
               className="hover:text-gray-300 transition-colors"
             >
