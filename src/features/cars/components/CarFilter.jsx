@@ -36,6 +36,12 @@ export default function CarFilter() {
           <option value="truck">Truck</option>
           <option value="van">Van</option>
         </select>
+        <button className="bg-yellow-400 text-white px-6 py-2 rounded hover:bg-yellow-500 transition">
+          Apply Filters
+        </button>
+        <button className="bg-yellow-400 text-white px-6 py-2 rounded hover:bg-yellow-500 transition">
+          Clear Filters
+        </button>
       </div>
     </>
   );

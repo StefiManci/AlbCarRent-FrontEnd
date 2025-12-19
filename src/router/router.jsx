@@ -9,6 +9,11 @@ import NotFound from "../shared/NotFound";
 import Cars from "../pages/Cars";
 import Blog from "../pages/Blog";
 import ProtectedLogin from "../shared/protectedLogin";
+import ProtectedRoute from "../shared/ProtectedRoute";
+import BusinessManagerPage from "../features/profile/privateProfiles/BusinessProfile/BusinessManagerPage";
+import BusinessDisplayPage from "../features/profile/publicProfiles/BusinessProfile/BusinessDisplayPage";
+import CustomerManagerPage from "../features/profile/privateProfiles/CustomerProfile/CustomerManagerPage";
+import CustomerDisplayPage from "../features/profile/publicProfiles/CustomerProfile/CustomerDisplayPage";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +54,38 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/businessmanager",
+        element: (
+          <ProtectedRoute>
+            <BusinessManagerPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/businessprofile",
+        element: (
+          <ProtectedRoute>
+            <BusinessDisplayPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/customermanager",
+        element: (
+          <ProtectedRoute>
+            <CustomerManagerPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/customerprofile",
+        element: (
+          <ProtectedRoute>
+            <CustomerDisplayPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "*",
