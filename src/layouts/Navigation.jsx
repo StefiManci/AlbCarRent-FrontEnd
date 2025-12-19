@@ -1,45 +1,103 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/login/store/authSlice";
 
 export default function Navigation() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.auth.token);
+  const isAuthenticated = !!token;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <nav className="bg-gray-800 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <div className="shrink-0">
+          <div
+            className="shrink-0 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <h1 className="text-2xl font-bold text-white">AlbCarRent</h1>
           </div>
           <div className="hidden md:flex space-x-6">
-            <a href="/" className="hover:text-gray-300 transition-colors">
+            <button
+              onClick={() => navigate("/")}
+              className="hover:text-gray-300 transition-colors"
+            >
               Home
-            </a>
-            <a href="/about" className="hover:text-gray-300 transition-colors">
+            </button>
+            <button
+              onClick={() => navigate("/about")}
+              className="hover:text-gray-300 transition-colors"
+            >
               About
-            </a>
-            <a href="/cars" className="hover:text-gray-300 transition-colors">
+            </button>
+            <button
+              onClick={() => navigate("/cars")}
+              className="hover:text-gray-300 transition-colors"
+            >
               Cars
-            </a>
-            <a
-              href="/contact"
+            </button>
+            <button
+              onClick={() => navigate("/contact")}
               className="hover:text-gray-300 transition-colors"
             >
               Contact
-            </a>
+            </button>
           </div>
           <div className="hidden md:flex space-x-4">
-            <button
-              onClick={() => navigate("/login")}
-              className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => navigate("/register")}
-              className="bg-white text-gray-800 px-3 py-1 rounded hover:bg-gray-200 transition"
-            >
-              Sign Up
-            </button>
+            {!isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => navigate("/login")}
+                  className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition"
+                >
+                  Login
+                </button>
+
+                <button
+                  onClick={() => navigate("/register")}
+                  className="bg-white text-gray-800 px-3 py-1 rounded hover:bg-gray-200 transition"
+                >
+                  Sign Up
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate("/profile")}
+                  className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5.121 17.804A9 9 0 1118.879 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  Profile
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 px-3 py-1 rounded hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
+              </>
+            )}
           </div>
           <div className="md:hidden">
             <button className="text-white">
@@ -48,7 +106,6 @@ export default function Navigation() {
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"

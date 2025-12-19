@@ -1,21 +1,28 @@
-import { Outlet } from "react-router-dom"
-import Navigation from "./Navigation"
-import Footer from "./Footer"
-
-
+import { Outlet } from "react-router-dom";
+import Navigation from "./Navigation";
+import Footer from "./Footer";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { loadTokenFromStorage } from "../features/login/store/authSlice";
 
 export default function MainLayout() {
-    return (
-        <>
-        <div className="min-h-screen flex flex-col">
-            <Navigation />
+  const dispatch = useDispatch();
 
-            <main className="flex-1 w-full">
-               <Outlet />
-            </main>
+  useEffect(() => {
+    dispatch(loadTokenFromStorage());
+  }, [dispatch]);
 
-            <Footer />
-        </div>
-        </>
-    )
+  return (
+    <>
+      <div className="min-h-screen flex flex-col">
+        <Navigation />
+
+        <main className="flex-1 w-full">
+          <Outlet />
+        </main>
+
+        <Footer />
+      </div>
+    </>
+  );
 }
