@@ -8,6 +8,7 @@ import Register from "../features/login/components/Register";
 import NotFound from "../shared/NotFound";
 import Cars from "../pages/Cars";
 import Blog from "../pages/Blog";
+import ProtectedLogin from "../shared/protectedLogin";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +32,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <ProtectedLogin>
+            <Login />
+          </ProtectedLogin>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <ProtectedLogin>
+            <Register />
+          </ProtectedLogin>
+        ),
       },
       {
         path: "/blog",

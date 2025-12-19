@@ -77,6 +77,14 @@ export default function GetInTouch() {
               >
                 Send Message
               </button>
+              <div>
+                <span className="font-semibold">Note:</span>
+                <p className="text-xs">
+                  This message goes to website admin, if u want to contact a
+                  bussines please use their contact information under bussines
+                  page.
+                </p>
+              </div>
             </form>
           </div>
         </div>
