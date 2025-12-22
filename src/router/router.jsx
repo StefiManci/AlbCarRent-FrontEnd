@@ -14,6 +14,10 @@ import BusinessManagerPage from "../features/profile/privateProfiles/BusinessPro
 import BusinessDisplayPage from "../features/profile/publicProfiles/BusinessProfile/BusinessDisplayPage";
 import CustomerManagerPage from "../features/profile/privateProfiles/CustomerProfile/CustomerManagerPage";
 import CustomerDisplayPage from "../features/profile/publicProfiles/CustomerProfile/CustomerDisplayPage";
+import AdminLayout from "../features/Admin/AdminLayout/AdminLayout";
+import AdminDashboard from "../features/Admin/AdminLayout/Dashboard/AdminDashboard";
+import FleetPage from "../features/Admin/AdminLayout/Fleet/FleetPage";
+import ReservationsPage from "../features/Admin/AdminLayout/Reservations/ReservationsPage";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +94,23 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFound />,
+      },
+    ],
+  },
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/admin/fleet",
+        element: <FleetPage />,
+      },
+      {
+        path: "/admin/reservations",
+        element: <ReservationsPage />,
       },
     ],
   },
