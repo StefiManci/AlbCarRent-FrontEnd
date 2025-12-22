@@ -40,7 +40,10 @@ export default function AdminNavigation() {
           ))}
         </nav>
         <div className="flex items-center gap-4">
-          <button className="hidden md:block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+          <button
+            onClick={() => navigate("/admin/customers/add")}
+            className="hidden md:block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+          >
             + Add Customer
           </button>
           <div className="relative">
