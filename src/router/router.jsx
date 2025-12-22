@@ -18,6 +18,7 @@ import AdminLayout from "../features/Admin/AdminLayout/AdminLayout";
 import AdminDashboard from "../features/Admin/AdminLayout/Dashboard/AdminDashboard";
 import FleetPage from "../features/Admin/AdminLayout/Fleet/FleetPage";
 import ReservationsPage from "../features/Admin/AdminLayout/Reservations/ReservationsPage";
+import CustomersPage from "../features/Admin/AdminLayout/Customers/CustomersPage";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/reservations",
         element: <ReservationsPage />,
+      },
+      {
+        path: "/admin/customers",
+        element: <CustomersPage />,
       },
     ],
   },
