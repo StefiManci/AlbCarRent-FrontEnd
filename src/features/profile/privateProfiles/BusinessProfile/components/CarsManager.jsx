@@ -30,10 +30,13 @@ export default function CarsManager() {
           <table className="min-w-full bg-white shadow rounded">
             <thead className="bg-gray-100">
               <tr>
+                <th className="py-2 px-4 text-left">Make</th>
                 <th className="py-2 px-4 text-left">Model</th>
                 <th className="py-2 px-4 text-left">Year</th>
+                <th className="py-2 px-4 text-left">Color</th>
+                <th className="py-2 px-4 text-left">License Plate</th>
+                <th className="py-2 px-4 text-left">Daily Rental Price</th>
                 <th className="py-2 px-4 text-left">Status</th>
-                <th className="py-2 px-4 text-center">Actions</th>
               </tr>
             </thead>
             <CarTable addedCar={addedCar} />

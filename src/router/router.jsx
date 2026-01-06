@@ -10,7 +10,7 @@ import Cars from "../pages/Cars";
 import Blog from "../pages/Blog";
 import ProtectedLogin from "../shared/protectedLogin";
 import ProtectedRoute from "../shared/ProtectedRoute";
-import BusinessManagerPage from "../features/profile/privateProfiles/BusinessProfile/BusinessManagerPage";
+import BusinessOwnerDashboard from "../features/profile/privateProfiles/BusinessProfile/BusinessManagerPage";
 import BusinessDisplayPage from "../features/profile/publicProfiles/BusinessProfile/BusinessDisplayPage";
 import CustomerManagerPage from "../features/profile/privateProfiles/CustomerProfile/CustomerManagerPage";
 import CustomerDisplayPage from "../features/profile/publicProfiles/CustomerProfile/CustomerDisplayPage";
@@ -20,6 +20,10 @@ import FleetPage from "../features/Admin/AdminLayout/Fleet/FleetPage";
 import ReservationsPage from "../features/Admin/AdminLayout/Reservations/ReservationsPage";
 import CustomersPage from "../features/Admin/AdminLayout/Customers/CustomersPage";
 import AddCustomer from "../features/Admin/AdminLayout/Customers/components/AddCustomer";
+import CarsManager from "../features/profile/privateProfiles/BusinessProfile/components/CarsManager";
+import ReservationsManager from "../features/profile/privateProfiles/BusinessProfile/components/ReservationsManager";
+import Statistics from "../features/profile/privateProfiles/BusinessProfile/components/Statistics";
+import CarInformation from "../features/profile/privateProfiles/BusinessProfile/components/actions/car-information/CarInformation";
 
 const router = createBrowserRouter([
   {
@@ -65,9 +69,16 @@ const router = createBrowserRouter([
         path: "/businessmanager",
         element: (
           <ProtectedRoute>
-            <BusinessManagerPage />
+            <BusinessOwnerDashboard />
           </ProtectedRoute>
         ),
+        children: [
+          { index: true, element: <CarsManager /> },
+          { path: "cars", element: <CarsManager /> },
+          { path: "bookings", element: <ReservationsManager /> },
+          { path: "statistics", element: <Statistics /> },
+          { path: "cars/:id", element: <CarInformation /> },
+        ],
       },
       {
         path: "/businessprofile",

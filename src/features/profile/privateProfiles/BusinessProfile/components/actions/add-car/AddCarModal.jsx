@@ -36,7 +36,7 @@ export default function AddCarModal({ closeCarModal, setAddedCar }) {
 
     try {
       var response = await carService.addCar(carWithOwner);
-      if (response.data.success) {
+      if (response.success) {
         setAddedCar((prev) => prev + 1);
       }
       closeCarModal();

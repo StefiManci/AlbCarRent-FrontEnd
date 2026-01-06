@@ -1,9 +1,11 @@
 import carService from "../services/carService";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CarTable({ addedCar }) {
   const [cars, setCars] = useState([]);
+  const navigate = useNavigate();
 
   const userId = useSelector((state) => state.auth.userId);
 
@@ -11,7 +13,6 @@ export default function CarTable({ addedCar }) {
     const fetchCars = async () => {
       try {
         const response = await carService.getCars(userId);
-        console.log("Get All Cars Response:", response);
         setCars(response.cars || []);
       } catch (error) {
         console.error("Error fetching cars:", error);
@@ -26,40 +27,27 @@ export default function CarTable({ addedCar }) {
         <tr
           key={car.id}
           className="hover:bg-gray-50 transition-colors duration-150"
+          onClick={() => navigate(`/businessmanager/cars/${car.id}`)}
         >
+          <td className="px-4 py-3 font-medium text-gray-900">{car.make}</td>
           <td className="px-4 py-3 font-medium text-gray-900">{car.model}</td>
           <td className="px-4 py-3">{car.year}</td>
           <td className="px-4 py-3 capitalize">{car.color}</td>
+          <td className="px-4 py-3 uppercase">{car.licensePlate}</td>
+          <td className="px-4 py-3">${car.dailyRentalPrice}</td>
           <td className="px-4 py-3">
-            <div className="flex justify-center gap-3">
-              <button
-                className="
-                  px-4 py-1.5
-                  bg-blue-600 text-white
-                  rounded-md
-                  text-xs font-semibold
-                  hover:bg-blue-700
-                  focus:outline-none focus:ring-2 focus:ring-blue-400
-                  transition
-                "
-              >
-                Edit
-              </button>
-
-              <button
-                className="
-                  px-4 py-1.5
-                  bg-red-600 text-white
-                  rounded-md
-                  text-xs font-semibold
-                  hover:bg-red-700
-                  focus:outline-none focus:ring-2 focus:ring-red-400
-                  transition
-                "
-              >
-                Delete
-              </button>
-            </div>
+            <span
+              className={`
+                px-2 py-1 rounded-full text-xs font-semibold
+                ${
+                  car.status === "available"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }
+              `}
+            >
+              {car.status === "available" ? "Available" : "Not Available"}
+            </span>
           </td>
         </tr>
       ))}
