@@ -1,8 +1,10 @@
 import { useState } from "react";
 import AddCarModal from "./actions/add-car/AddCarModal";
+import CarTable from "./CarTable";
 
 export default function CarsManager() {
   const [carModal, setCarModalOpen] = useState(false);
+  const [addedCar, setAddedCar] = useState(0);
 
   const openCarModal = () => {
     setCarModalOpen(true);
@@ -31,14 +33,16 @@ export default function CarsManager() {
                 <th className="py-2 px-4 text-left">Model</th>
                 <th className="py-2 px-4 text-left">Year</th>
                 <th className="py-2 px-4 text-left">Status</th>
-                <th className="py-2 px-4 text-left">Actions</th>
+                <th className="py-2 px-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <CarTable addedCar={addedCar} />
           </table>
         </div>
       </div>
-      {carModal && <AddCarModal closeCarModal={closeCarModal} />}
+      {carModal && (
+        <AddCarModal closeCarModal={closeCarModal} setAddedCar={setAddedCar} />
+      )}
     </>
   );
 }

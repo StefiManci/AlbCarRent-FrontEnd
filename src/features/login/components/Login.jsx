@@ -32,8 +32,6 @@ export default function Login() {
           password: formData.password,
         })
       ).unwrap();
-
-      console.log("Login successful:", result);
       navigate("/");
     } catch (err) {
       console.error("Login failed:", err);

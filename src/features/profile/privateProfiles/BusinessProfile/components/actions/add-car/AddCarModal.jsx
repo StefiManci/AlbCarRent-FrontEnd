@@ -1,8 +1,9 @@
 import carService from "../../../services/carService";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { validateCar } from "../validateCar";
 
-export default function AddCarModal({ closeCarModal }) {
+export default function AddCarModal({ closeCarModal, setAddedCar }) {
   const [car, setCar] = useState({
     make: "",
     model: "",
@@ -18,6 +19,8 @@ export default function AddCarModal({ closeCarModal }) {
     ownedBy: "",
   });
 
+  const userId = useSelector((state) => state.auth.userId);
+
   const [errors, setErrors] = useState(null);
 
   const handleAddCar = async (e) => {
@@ -29,8 +32,13 @@ export default function AddCarModal({ closeCarModal }) {
       return;
     }
 
+    const carWithOwner = { ...car, ownedBy: userId };
+
     try {
-      await carService.addCar(car);
+      var response = await carService.addCar(carWithOwner);
+      if (response.data.success) {
+        setAddedCar((prev) => prev + 1);
+      }
       closeCarModal();
     } catch (error) {
       console.error("Error adding car:", error);
@@ -196,19 +204,6 @@ export default function AddCarModal({ closeCarModal }) {
               />
               {errors?.mileage && (
                 <p className="text-red-500">{errors.mileage}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-gray-700 mb-1">Owned By</label>
-              <input
-                type="text"
-                className="w-full px-3 py-2 border rounded"
-                value={car.ownedBy}
-                onChange={(e) => setCar({ ...car, ownedBy: e.target.value })}
-              />
-              {errors?.ownedBy && (
-                <p className="text-red-500">{errors.ownedBy}</p>
               )}
             </div>
           </form>

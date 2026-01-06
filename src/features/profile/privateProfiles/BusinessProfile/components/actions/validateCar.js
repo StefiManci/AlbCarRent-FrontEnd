@@ -12,7 +12,5 @@ export const validateCar = (car) => {
   if (!car.transmission) errors.transmission = "Transmission is required";
   if (!car.fuelType) errors.fuelType = "Fuel Type is required";
   if (!car.mileage) errors.mileage = "Mileage is required";
-  if (!car.ownedBy) errors.ownedBy = "Owned By is required";
-
   return errors;
 };

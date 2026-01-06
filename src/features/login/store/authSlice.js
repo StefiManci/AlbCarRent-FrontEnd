@@ -28,19 +28,25 @@ export const register = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    token: null,
+    token: undefined,
     loading: false,
     error: null,
+    userId: null,
   },
   reducers: {
     loadTokenFromStorage: (state) => {
       const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
       if (token) {
         state.token = token;
       }
+      if (userId) {
+        state.userId = userId;
+      }
     },
     logout: (state) => {
-      state.token = null;
+      state.token = undefined;
+      state.userId = null;
       localStorage.removeItem("token");
     },
   },
@@ -53,7 +59,9 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        state.userId = action.payload.id;
         localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("userId", action.payload.id);
       })
 
       .addCase(login.rejected, (state, action) => {
