@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CarTable({ addedCar }) {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const userId = useSelector((state) => state.auth.userId);
@@ -16,10 +17,36 @@ export default function CarTable({ addedCar }) {
         setCars(response.cars || []);
       } catch (error) {
         console.error("Error fetching cars:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchCars();
   }, [addedCar, userId]);
+
+  if (loading) {
+    return (
+      <tbody className="bg-white divide-y divide-gray-200 text-sm text-gray-700">
+        <tr>
+          <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+            Loading cars...
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
+  if (cars.length === 0) {
+    return (
+      <tbody className="bg-white divide-y divide-gray-200 text-sm text-gray-700">
+        <tr>
+          <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+            No cars available. Please add a new car.
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
 
   return (
     <tbody className="bg-white divide-y divide-gray-200 text-sm text-gray-700">
