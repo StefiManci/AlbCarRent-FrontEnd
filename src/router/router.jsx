@@ -24,6 +24,8 @@ import CarsManager from "../features/profile/privateProfiles/BusinessProfile/com
 import ReservationsManager from "../features/profile/privateProfiles/BusinessProfile/components/ReservationsManager";
 import Statistics from "../features/profile/privateProfiles/BusinessProfile/components/Statistics";
 import CarInformation from "../features/profile/privateProfiles/BusinessProfile/components/actions/car-information/CarInformation";
+import Unauthorized from "../shared/Unauthorized";
+import RoleProtectedRoute from "../shared/RoleProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -68,9 +70,9 @@ const router = createBrowserRouter([
       {
         path: "/businessmanager",
         element: (
-          <ProtectedRoute>
+          <RoleProtectedRoute allowedRoles={["Bussiness"]}>
             <BusinessOwnerDashboard />
-          </ProtectedRoute>
+          </RoleProtectedRoute>
         ),
         children: [
           { index: true, element: <CarsManager /> },
@@ -107,6 +109,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFound />,
+      },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized />,
       },
     ],
   },

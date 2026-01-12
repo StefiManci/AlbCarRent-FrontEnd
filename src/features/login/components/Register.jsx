@@ -14,10 +14,16 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    isBussinessAccount: false,
   });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, type, value, checked } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -35,6 +41,7 @@ export default function Register() {
           username: formData.username,
           email: formData.email,
           password: formData.password,
+          isBussinessAccount: formData.isBussinessAccount,
         })
       ).unwrap();
 
@@ -112,6 +119,20 @@ export default function Register() {
               placeholder="••••••••"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
             />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="isBussinessAccount"
+              name="isBussinessAccount"
+              checked={formData.isBussinessAccount}
+              onChange={handleChange}
+              className="h-4 w-4 text-gray-800 focus:ring-gray-800 border-gray-300 rounded"
+            />
+            <label htmlFor="isBussinessAccount" className="text-gray-700">
+              Register as Business Account
+            </label>
           </div>
 
           <button

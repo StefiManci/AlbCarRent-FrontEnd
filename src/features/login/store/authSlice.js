@@ -29,25 +29,34 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     token: undefined,
-    loading: false,
+    loading: true,
     error: null,
     userId: null,
+    userRole: null,
   },
   reducers: {
     loadTokenFromStorage: (state) => {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
+      const userRole = localStorage.getItem("userRole");
       if (token) {
         state.token = token;
       }
       if (userId) {
         state.userId = userId;
       }
+      if (userRole) {
+        state.userRole = userRole;
+      }
+      state.loading = false;
     },
     logout: (state) => {
       state.token = undefined;
       state.userId = null;
+      state.userRole = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userRole");
     },
   },
   extraReducers: (builder) => {
@@ -60,8 +69,10 @@ const authSlice = createSlice({
         state.loading = false;
         state.token = action.payload.token;
         state.userId = action.payload.id;
+        state.userRole = action.payload.role;
         localStorage.setItem("token", action.payload.token);
         localStorage.setItem("userId", action.payload.id);
+        localStorage.setItem("userRole", action.payload.role);
       })
 
       .addCase(login.rejected, (state, action) => {
@@ -76,6 +87,10 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        state.userId = action.payload.id;
+        state.userRole = action.payload.role;
+        localStorage.setItem("userId", action.payload.id);
+        localStorage.setItem("userRole", action.payload.role);
         localStorage.setItem("token", action.payload.token);
       })
 
