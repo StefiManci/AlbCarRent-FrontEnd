@@ -19,6 +19,7 @@ export default function CarInformation() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  //Get car details on component mount
   useEffect(() => {
     async function fetchCarDetails() {
       try {
@@ -61,11 +62,10 @@ export default function CarInformation() {
     setIsEditing(!isEditing);
   };
 
+  //Edit Car Details
   const saveChanges = async () => {
     try {
       const updateCarResponse = await carService.updateCar(car);
-
-      console.log("Update Car Response:", updateCarResponse);
 
       if (updateCarResponse.success) {
         setSuccess({
@@ -94,6 +94,40 @@ export default function CarInformation() {
     }
 
     setIsEditing(false);
+  };
+
+  //Delete Car
+  const handleDelete = async () => {
+    try {
+      const deleteCarResponse = await carService.deleteCar(car.id);
+      if (deleteCarResponse.success) {
+        setSuccess({
+          hasSuccess: true,
+          message: deleteCarResponse.message || "Car deleted successfully",
+        });
+        navigate(-1);
+      } else {
+        setError({
+          hasError: true,
+          message: deleteCarResponse.message || "Delete failed",
+        });
+      }
+    } catch (err) {
+      const message =
+        err?.response?.data?.title ||
+        (err?.response?.data?.errors
+          ? JSON.stringify(err.response.data.errors)
+          : null) ||
+        err?.message ||
+        "Failed to delete car. An error occurred!";
+      setError({ hasError: true, message });
+    }
+  };
+
+  const confirmDelete = (carId) => {
+    if (window.confirm("Are you sure you want to delete this car?")) {
+      handleDelete(carId);
+    }
   };
 
   if (loading) {
@@ -265,7 +299,10 @@ export default function CarInformation() {
             </button>
           )}
 
-          <button className="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+          <button
+            onClick={() => confirmDelete(car.id)}
+            className="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+          >
             Delete
           </button>
         </div>

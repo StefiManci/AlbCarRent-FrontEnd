@@ -38,6 +38,17 @@ const carService = {
       throw error.response?.data || error.message;
     }
   },
+
+  deleteCar: async (carId) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/business/delete-car/${carId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
 };
 
 export default carService;
