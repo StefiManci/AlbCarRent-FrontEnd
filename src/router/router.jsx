@@ -26,6 +26,7 @@ import Statistics from "../features/profile/privateProfiles/BusinessProfile/comp
 import CarInformation from "../features/profile/privateProfiles/BusinessProfile/components/actions/car-information/CarInformation";
 import Unauthorized from "../shared/Unauthorized";
 import RoleProtectedRoute from "../shared/RoleProtectedRoute";
+import Profile from "../features/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/businessprofile",
+        path: "/businessprofile/:id",
         element: (
           <ProtectedRoute>
             <BusinessDisplayPage />
@@ -91,18 +92,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/customermanager",
+        path: "/customerprofile/:id",
         element: (
           <ProtectedRoute>
-            <CustomerManagerPage />
+            <CustomerDisplayPage />
           </ProtectedRoute>
         ),
       },
       {
-        path: "/customerprofile",
+        path: "/profile",
         element: (
           <ProtectedRoute>
-            <CustomerDisplayPage />
+            <Profile />
           </ProtectedRoute>
         ),
       },
