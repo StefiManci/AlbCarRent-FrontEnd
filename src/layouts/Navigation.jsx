@@ -7,6 +7,7 @@ export default function Navigation() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const userRole = useSelector((state) => state.auth.userRole);
   const isAuthenticated = !!token;
 
   const handleLogout = () => {
@@ -67,6 +68,14 @@ export default function Navigation() {
               </>
             ) : (
               <>
+                {userRole === "Bussiness" && (
+                  <button
+                    onClick={() => navigate("/businessmanager")}
+                    className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 transition"
+                  >
+                    Business
+                  </button>
+                )}
                 <button
                   onClick={() => navigate("/profile")}
                   className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition"

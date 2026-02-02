@@ -8,6 +8,8 @@ export default function Profile() {
   const userRole = useSelector((state) => state.auth.userRole);
   const navigate = useNavigate();
 
+  console.log("User Role in Profile:", userRole);
+
   useEffect(() => {
     if (userRole === "Admin") {
       navigate("/admin");

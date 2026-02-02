@@ -27,6 +27,7 @@ import CarInformation from "../features/profile/privateProfiles/BusinessProfile/
 import Unauthorized from "../shared/Unauthorized";
 import RoleProtectedRoute from "../shared/RoleProtectedRoute";
 import Profile from "../features/profile/Profile";
+import PublicCarInfo from "../features/cars/components/PublicCarInfo";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/cars",
         element: <Cars />,
+      },
+      {
+        path: "/cars/carInformation/:id",
+        element: <PublicCarInfo />,
       },
       {
         path: "/login",

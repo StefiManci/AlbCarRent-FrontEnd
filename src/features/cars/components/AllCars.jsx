@@ -1,11 +1,13 @@
-import carPageService from "./services/carPageService";
+import carPageService from "../services/carPageService";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AllCars({ filter }) {
   const [cars, setCars] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -44,6 +46,10 @@ export default function AllCars({ filter }) {
     return <p className="text-center text-red-500">{error}</p>;
   }
 
+  const carClickHandler = (carId) => {
+    navigate(`/cars/carInformation/${carId}`);
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Fleet:</h2>
@@ -54,8 +60,9 @@ export default function AllCars({ filter }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {cars.map((car) => (
             <div
+              onClick={() => carClickHandler(car.id)}
               key={car.id}
-              className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
+              className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow cursor-pointer"
             >
               <img
                 src={car.imageUrl || "https://via.placeholder.com/300x200"}
