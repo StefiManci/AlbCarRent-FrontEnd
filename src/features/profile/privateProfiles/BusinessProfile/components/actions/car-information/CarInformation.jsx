@@ -283,6 +283,9 @@ export default function CarInformation() {
           </div>
         </div>
         <div className="flex justify-end gap-3">
+          <button className="px-5 py-2 bg-white text-black rounded-md hover:bg-gray-200">
+            + Add Photos
+          </button>
           {isEditing ? (
             <button
               onClick={saveChanges}
