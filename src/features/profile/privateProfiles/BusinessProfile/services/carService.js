@@ -13,7 +13,7 @@ const carService = {
   getCars: async (ownedBy) => {
     try {
       const response = await axiosInstance.get(
-        `/business/get-all-cars/${ownedBy}`
+        `/business/get-all-cars/${ownedBy}`,
       );
       return response.data;
     } catch (error) {
@@ -42,8 +42,34 @@ const carService = {
   deleteCar: async (carId) => {
     try {
       const response = await axiosInstance.delete(
-        `/business/delete-car/${carId}`
+        `/business/delete-car/${carId}`,
       );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
+
+  uploadCarImage: async (carId, businessId, imageFile) => {
+    try {
+      const formData = new FormData();
+      formData.append("FormFile", imageFile);
+      formData.append("CarId", carId);
+      formData.append("BusinessId", businessId);
+
+      console.log(
+        "Uploading image with data:",
+        formData.get("FormFile"),
+        formData.get("CarId"),
+        formData.get("BusinessId"),
+      );
+
+      const response = await axiosInstance.post("/upload/image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;

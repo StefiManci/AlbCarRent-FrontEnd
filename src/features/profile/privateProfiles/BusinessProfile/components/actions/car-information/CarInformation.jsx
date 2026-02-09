@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import InfoCard from "../car-information/InfoCard";
 import Detail from "../car-information/Detail";
 import carService from "../../../services/carService";
@@ -18,6 +18,7 @@ export default function CarInformation() {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   //Get car details on component mount
   useEffect(() => {
@@ -121,6 +122,34 @@ export default function CarInformation() {
         err?.message ||
         "Failed to delete car. An error occurred!";
       setError({ hasError: true, message });
+    }
+  };
+
+  //Handle Car Upload
+  const handlePhotoUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file || !car?.id) return;
+
+    try {
+      const response = await carService.uploadCarImage(
+        car.id,
+        car.ownedBy,
+        file,
+      );
+
+      if (response.success) {
+        setSuccess({
+          hasSuccess: true,
+          message: response.message || "Photo uploaded successfully",
+        });
+      }
+    } catch (err) {
+      setError({
+        hasError: true,
+        message: err?.message || "Failed to upload photo",
+      });
+    } finally {
+      event.target.value = "";
     }
   };
 
@@ -282,8 +311,18 @@ export default function CarInformation() {
             />
           </div>
         </div>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handlePhotoUpload}
+          className="hidden"
+        />
         <div className="flex justify-end gap-3">
-          <button className="px-5 py-2 bg-white text-black rounded-md hover:bg-gray-200">
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="px-5 py-2 bg-white text-black rounded-md hover:bg-gray-200"
+          >
             + Add Photos
           </button>
           {isEditing ? (
