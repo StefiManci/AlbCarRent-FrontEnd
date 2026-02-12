@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef, use } from "react";
+import { useEffect, useState, useRef } from "react";
 import InfoCard from "../car-information/InfoCard";
 import Detail from "../car-information/Detail";
 import carService from "../../../services/carService";
@@ -8,6 +8,7 @@ export default function CarInformation() {
   const [car, setCar] = useState(null);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [photoUpload, setPhotoUpload] = useState(0);
   const [error, setError] = useState({
     hasError: false,
     message: "",
@@ -145,6 +146,12 @@ export default function CarInformation() {
           hasSuccess: true,
           message: response.message || "Photo uploaded successfully",
         });
+        setPhotoUpload((prev) => prev + 1);
+      } else {
+        setError({
+          hasError: true,
+          message: response.message || "Photo upload failed",
+        });
       }
     } catch (err) {
       setError({
@@ -171,7 +178,7 @@ export default function CarInformation() {
     if (car?.id && car?.ownedBy) {
       getCarImages();
     }
-  }, [car?.id, car?.ownedBy]);
+  }, [car?.id, car?.ownedBy, photoUpload]);
 
   const confirmDelete = (carId) => {
     if (window.confirm("Are you sure you want to delete this car?")) {
