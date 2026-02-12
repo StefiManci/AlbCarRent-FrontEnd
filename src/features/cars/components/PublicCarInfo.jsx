@@ -1,10 +1,14 @@
 import carPageService from "../services/carPageService";
+import carService from "../../profile/privateProfiles/BusinessProfile/services/carService";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function PublicCarInfo() {
   const [car, setCar] = useState(null);
+  const [images, setImages] = useState([]);
   const { id } = useParams();
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -25,23 +29,48 @@ export default function PublicCarInfo() {
     fetchCar();
   }, [id]);
 
-  const images = ["/react.svg", "/car2.jpg", "/car3.jpg"];
+  useEffect(() => {
+    const getCarImages = async () => {
+      if (car) {
+        try {
+          const response = await carService.getCarImages(
+            car.id,
+            car.businessId,
+          );
+          if (response?.success) {
+            setImages(response.imageUrls || []);
+          } else {
+            console.error("Failed to load car images");
+          }
+        } catch (err) {
+          console.error("Failed to load car images:", err.message || err);
+        }
+      }
+    };
+
+    getCarImages();
+  }, [car]);
 
   const [current, setCurrent] = useState(0);
 
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
+  const nextSlide = () => {
+    if (images.length === 0) return;
+    setCurrent((prev) => (prev + 1) % images.length);
+  };
 
-  const prevSlide = () =>
+  const prevSlide = () => {
+    if (images.length === 0) return;
     setCurrent((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
     <>
       <div className="min-h-screen px-6 py-10 flex flex-col items-center bg-gray-50">
         <div className="relative h-[400px] w-4/5 overflow-hidden rounded-2xl bg-gray-200">
-          {images.map((img, index) => (
+          {images.map((image, index) => (
             <img
               key={index}
-              src={img}
+              src={apiUrl + image}
               alt="car"
               className={`absolute h-full w-full object-cover transition-opacity duration-500 ${
                 index === current ? "opacity-100" : "opacity-0"

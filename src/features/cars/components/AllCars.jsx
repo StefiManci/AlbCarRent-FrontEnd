@@ -9,6 +9,8 @@ export default function AllCars({ filter }) {
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchCars = async () => {
       try {
@@ -65,7 +67,7 @@ export default function AllCars({ filter }) {
               className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow cursor-pointer"
             >
               <img
-                src={car.imageUrl || "https://via.placeholder.com/300x200"}
+                src={apiUrl + car.image || "https://via.placeholder.com/300x200"}
                 alt={car.name}
                 className="w-full h-48 object-cover"
               />

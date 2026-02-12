@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import InfoCard from "../car-information/InfoCard";
 import Detail from "../car-information/Detail";
 import carService from "../../../services/carService";
 
 export default function CarInformation() {
   const [car, setCar] = useState(null);
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState({
     hasError: false,
@@ -19,6 +20,8 @@ export default function CarInformation() {
   const { id } = useParams();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   //Get car details on component mount
   useEffect(() => {
@@ -152,6 +155,23 @@ export default function CarInformation() {
       event.target.value = "";
     }
   };
+
+  useEffect(() => {
+    const getCarImages = async () => {
+      try {
+        const response = await carService.getCarImages(car.id, car.ownedBy);
+        if (response.success) {
+          console.log("Fetched car images:", response.imageUrls);
+          setImages(response.imageUrls);
+        }
+      } catch (err) {
+        console.error("Error fetching car images:", err);
+      }
+    };
+    if (car?.id && car?.ownedBy) {
+      getCarImages();
+    }
+  }, [car?.id, car?.ownedBy]);
 
   const confirmDelete = (carId) => {
     if (window.confirm("Are you sure you want to delete this car?")) {
@@ -347,6 +367,29 @@ export default function CarInformation() {
           >
             Delete
           </button>
+        </div>
+        <div className="mt-6 overflow-y-auto h-80 ">
+          <h2 className="text-xl font-semibold mb-4">Photos</h2>
+          {images && images.length > 0 ? (
+            <div className="grid grid-cols-3 gap-4">
+              {images.map((photo, index) => (
+                <a
+                  href={apiUrl + images[index]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    key={index}
+                    src={apiUrl + images[index]}
+                    alt={`Car Photo ${index + 1}`}
+                    className="w-full h-48 object-cover rounded-md"
+                  />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No photos available for this car.</p>
+          )}
         </div>
       </div>
     </>

@@ -75,6 +75,20 @@ const carService = {
       throw error.response?.data || error.message;
     }
   },
+
+  getCarImages: async (carId, businessId) => {
+    try {
+      console.log(
+        `Fetching images for carId: ${carId}, businessId: ${businessId}`,
+      );
+      const response = await axiosInstance.get(
+        `/car/images/car/${carId}/business/${businessId}`,
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
 };
 
 export default carService;
