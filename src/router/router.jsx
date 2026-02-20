@@ -28,6 +28,7 @@ import Unauthorized from "../shared/Unauthorized";
 import RoleProtectedRoute from "../shared/RoleProtectedRoute";
 import Profile from "../features/profile/Profile";
 import PublicCarInfo from "../features/cars/components/PublicCarInfo";
+import Book from "../features/booking/components/Book";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
             <Profile />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/booking",
+        element: <Book />,
       },
       {
         path: "*",

@@ -17,7 +17,7 @@ export default function Navigation() {
 
   const linkClasses = ({ isActive }) =>
     isActive
-      ? "text-yellow-400 font-semibold"
+      ? "text-blue-400 font-semibold"
       : "hover:text-gray-300 transition-colors";
 
   return (
