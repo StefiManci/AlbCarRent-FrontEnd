@@ -22,6 +22,19 @@ const bookingService = {
       throw error;
     }
   },
+  updateBookingStatus: async (bookingId, newStatus) => {
+    try {
+      console.log(`Updating booking ${bookingId} to status: ${newStatus}`);
+      const response = await axiosInstance.post(`/booking/change-status`, {
+        status: newStatus,
+        bookingId: bookingId,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating booking status:", error);
+      throw error;
+    }
+  },
 };
 
 export default bookingService;

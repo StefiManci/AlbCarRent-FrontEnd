@@ -37,6 +37,29 @@ export default function ReservationsManager() {
     }
   };
 
+  const updateBookingStatus = async (bookingId, newStatus) => {
+    try {
+      var response = await bookingService.updateBookingStatus(
+        bookingId,
+        newStatus,
+      );
+
+      if (response.success) {
+        setBookings((prevBookings) =>
+          prevBookings.map((booking) =>
+            booking.id === bookingId
+              ? { ...booking, status: newStatus }
+              : booking,
+          ),
+        );
+      } else {
+        console.error("Error updating booking status:", response.message);
+      }
+    } catch (error) {
+      console.error("Error updating booking status:", error);
+    }
+  };
+
   return (
     <>
       <div className="p-4  w-full flex flex-col items-center">
