@@ -114,7 +114,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/booking",
+        path: "/booking/:carId",
         element: <Book />,
       },
       {

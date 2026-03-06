@@ -67,13 +67,13 @@ export default function CarTable({ addedCar }) {
               className={`
                 px-2 py-1 rounded-full text-xs font-semibold
                 ${
-                  car.status === "available"
+                  car.isAvailable === true
                     ? "bg-green-100 text-green-800"
                     : "bg-red-100 text-red-800"
                 }
               `}
             >
-              {car.status === "available" ? "Available" : "Not Available"}
+              {car.isAvailable === true ? "Available" : "Not Available"}
             </span>
           </td>
         </tr>

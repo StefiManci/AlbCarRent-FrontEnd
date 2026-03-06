@@ -222,12 +222,12 @@ export default function CarInformation() {
         <div className="grid grid-cols-3 gap-6">
           <InfoCard
             title="Status"
-            value={car.status ? "Available" : "Not Available"}
+            value={car.isAvailable === true ? "Available" : "Not Available"}
             isEditing={isEditing}
             onChange={(newValue) => {
               setCar((prev) => ({
                 ...prev,
-                status: newValue,
+                isAvailable: newValue,
               }));
             }}
             badge

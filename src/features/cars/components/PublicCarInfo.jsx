@@ -221,7 +221,7 @@ export default function PublicCarInfo() {
                 </div>
                 <div className="w-full max-w-5xl mt-6 p-4">
                   <button
-                    onClick={() => navigate("/booking")}
+                    onClick={() => navigate(`/booking/${car.id}`)}
                     className="text-blue-700 border-b-2 font-semibold hover:text-blue-800 transition"
                   >
                     Book Now
