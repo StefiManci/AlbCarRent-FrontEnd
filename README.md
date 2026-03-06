@@ -1,16 +1,54 @@
-# React + Vite
+AlbCarRent Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for AlbCarRent, a car rental platform where customers can browse and book vehicles while businesses can create profiles and manage their cars and reservations.
 
-Currently, two official plugins are available:
+This application communicates with the AlbCarRent backend API to provide a modern and responsive user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-Features
+*Customer Features
 
-## React Compiler
+1)User registration and login
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2)Browse available rental cars
 
-## Expanding the ESLint configuration
+3)View car details
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+4)Book vehicles
+
+5)View booking history
+
+-Business Features
+
+1)Create and manage business profiles
+
+2)Add, edit, and remove cars
+
+3)Manage car availability
+
+4)View and manage reservations
+
+5)Manage business listings
+
+-UI Features
+
+1)Responsive design
+
+2)Modern React component architecture
+
+3)Dynamic car search and filtering
+
+4)Protected routes for authenticated users
+
+-Tech Stack
+
+Framework: React
+
+Build Tool: Vite / Create React App
+
+Routing: React Router
+
+State Management: Redux 
+
+Styling: TailwindCSS
+
+HTTP Client: Axios / Fetch
