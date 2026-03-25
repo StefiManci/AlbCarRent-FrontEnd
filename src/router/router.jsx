@@ -11,8 +11,6 @@ import Blog from "../pages/Blog";
 import ProtectedLogin from "../shared/protectedLogin";
 import ProtectedRoute from "../shared/ProtectedRoute";
 import BusinessOwnerDashboard from "../features/profile/privateProfiles/BusinessProfile/BusinessManagerPage";
-import BusinessDisplayPage from "../features/profile/publicProfiles/BusinessProfile/BusinessDisplayPage";
-import CustomerManagerPage from "../features/profile/privateProfiles/CustomerProfile/CustomerManagerPage";
 import CustomerDisplayPage from "../features/profile/publicProfiles/CustomerProfile/CustomerDisplayPage";
 import AdminLayout from "../features/Admin/AdminLayout/AdminLayout";
 import AdminDashboard from "../features/Admin/AdminLayout/Dashboard/AdminDashboard";
@@ -88,14 +86,6 @@ const router = createBrowserRouter([
           { path: "statistics", element: <Statistics /> },
           { path: "cars/:id", element: <CarInformation /> },
         ],
-      },
-      {
-        path: "/businessprofile/:id",
-        element: (
-          <ProtectedRoute>
-            <BusinessDisplayPage />
-          </ProtectedRoute>
-        ),
       },
       {
         path: "/customerprofile/:id",
